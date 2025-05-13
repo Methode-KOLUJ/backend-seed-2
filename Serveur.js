@@ -12,15 +12,23 @@ const PORT = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: [
-      /^https:\/\/(www\.)?ong-seed\.com$/,
-      /^https:\/\/(www\.)?ong-seed\.vercel\.app$/
-    ],
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        /^https:\/\/(www\.)?ong-seed\.com$/,
+        /^https:\/\/(www\.)?ong-seed\.vercel\.app$/
+      ];
+      if (!origin || allowedOrigins.some(o => o.test(origin))) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
     methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"],
+    allowedHeaders: ["Content-Type"]
   })
 );
+
 app.use(express.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
