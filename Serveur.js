@@ -12,7 +12,10 @@ const PORT = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: /^https:\/\/(www\.)?ong-seed\.com$/, // Autorise les deux versions
+    origin: [
+      /^https:\/\/(www\.)?ong-seed\.com$/,
+      /^https:\/\/(www\.)?ong-seed\.vercel\.app$/
+    ],
     credentials: true,
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
