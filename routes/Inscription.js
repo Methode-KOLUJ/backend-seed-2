@@ -1,27 +1,26 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Inscription = require('../models/Inscription');
+const Inscription = require("../models/Inscription");
 
 // Route pour enregistrer les inscriptions
-router.post('/', async (req, res) => {
-    try {
-        const { nom, telephone, codePays, email, role, message } = req.body;
+router.post("/", async (req, res) => {
+  try {
+    const { nom, phone, email, role, motivation } = req.body;
 
-        // Création d'une nouvelle inscription
-        const nouvelleInscription = new Inscription({
-            nom,
-            telephone,
-            codePays,
-            email,
-            role,
-            message
-        });
+    // Création d'une nouvelle inscription
+    const nouvelleInscription = new Inscription({
+      nom,
+      phone,
+      email,
+      role,
+      motivation,
+    });
 
-        await nouvelleInscription.save();
-        res.status(201).json({ message: "Inscription réussie !" });
-    } catch (error) {
-        res.status(500).json({ message: "Erreur lors de l'inscription", error });
-    }
+    await nouvelleInscription.save();
+    res.status(201).json({ message: "Inscription réussie !" });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de l'inscription", error });
+  }
 });
 
 module.exports = router;
